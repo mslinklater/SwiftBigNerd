@@ -7,28 +7,31 @@
 
 import Foundation
 
-var myTown = Town()
-var yourTown = myTown
-myTown.changePopulation(by: 500)
-print("myTown has \(myTown.population) and yourTown has \(yourTown.population)")
+var myTown = Town(population: 0, stopLights: 6)
+myTown?.printDescription()
+let myTownSize = myTown?.townSize
+myTown?.changePopulation(by: 500)
 
-let fredTheZombie = Zombie()
-fredTheZombie.town = myTown
-fredTheZombie.terrorizeTown()
-fredTheZombie.town?.printDescription()
+var fredTheZombie: Zombie? = Zombie(limp: false, fallingApart: false, town: myTown, monsterName: "Fred")
+fredTheZombie?.terrorizeTown()
+fredTheZombie?.town?.printDescription()
 
-print("Town size \(myTown.townSize)")
-myTown.changePopulation(by: 1000000)
-print("Town size \(myTown.townSize)")
+var convenientZombie = Zombie(limp: true, fallingApart: true)
 
-print("Victim pool: \(fredTheZombie.victimPool)")
-fredTheZombie.victimPool = 500
-print("Victim pool: \(fredTheZombie.victimPool)")
+print("Town size \(String(describing: myTown?.townSize))")
+myTown?.changePopulation(by: 1000000)
+print("Town size \(String(describing: myTown?.townSize))")
+
+print("Victim pool: \(String(describing: fredTheZombie?.victimPool))")
+fredTheZombie?.victimPool = 500
+print("Victim pool: \(String(describing: fredTheZombie?.victimPool))")
 
 print(Zombie.spookyNoise)
 if Zombie.isTerrifying {
     print("Run away!")
 }
+
+fredTheZombie = nil
 
 /// for the more curious
 

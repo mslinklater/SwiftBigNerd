@@ -19,3 +19,26 @@ for scalar in mutablePlayground.unicodeScalars {
 }
 
 let aAcutePrecomposed = "\u{00e1}"
+
+extension String {
+    func indicesOf(string: String) -> [Int] {
+        var indices = [Int]()
+        var searchStartIndex = self.startIndex
+
+        while searchStartIndex < self.endIndex,
+            let range = self.range(of: string, range: searchStartIndex..<self.endIndex),
+            !range.isEmpty
+        {
+            let index = distance(from: self.startIndex, to: range.lowerBound)
+            indices.append(index)
+            searchStartIndex = range.upperBound
+        }
+
+        return indices
+    }
+}
+
+let keyword = "abc"
+let html = "abcaaabc"
+let indicies = html.indicesOf(string: keyword)
+print(indicies) // [0, 1, 2, 3]
