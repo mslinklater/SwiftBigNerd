@@ -7,7 +7,9 @@ protocol TabularDataSource {
     func itemFor(row: Int, column: Int) -> String
 }
 
-func printTable(_ dataSource: TabularDataSource) {
+func printTable(_ dataSource: TabularDataSource & CustomStringConvertible) {
+    print("Table \(dataSource)")
+    
     // Create header row containing column headers
     var headerRow = "|"
     
@@ -30,7 +32,7 @@ func printTable(_ dataSource: TabularDataSource) {
         for j in 0 ..< dataSource.numberOfColumns {
             let item = dataSource.itemFor(row: i, column: j)
             let paddingNeeded = columnWidths[j] - item.count
-            let padding = repeatElement(" ", count: paddingNeeded).joined(separator: "")
+            let padding = repeatElement(" ", count: max(0, paddingNeeded)).joined(separator: "")
             out += " \(padding)\(item) |"
         }
         
@@ -94,9 +96,14 @@ struct Department: TabularDataSource, CustomStringConvertible {
 }
 
 var department = Department(name: "Engineering")
-department.add(Person(name:"Eva", age: 30, yearsOfExperience: 6))
+department.add(Person(name:"Eva", age: 1000, yearsOfExperience: 6))
 department.add(Person(name: "Saleh", age: 40, yearsOfExperience: 18))
 department.add(Person(name: "Amit", age: 50, yearsOfExperience: 20))
 
-print(department)
 printTable(department)
+
+let operationsDataSource: TabularDataSource = Department(name: "Operations")
+let engineeringDataSource = department as TabularDataSource
+
+let mikey = Person(name: "Mikey", age: 37, yearsOfExperience: 10)
+mikey is TabularDataSource
