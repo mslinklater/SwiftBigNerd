@@ -1,4 +1,4 @@
-import Cocoa
+import Foundation
 
 struct StackIterator<T>: IteratorProtocol {
     
@@ -96,7 +96,7 @@ myStack.push(10)
 myStack.push(20)
 myStack.push(30)
 
-// this doesn't seem to work...
+// this doesn't seem to work...?
 var myStackIterator = StackIterator(stack: myStack)
 while let value = myStackIterator.next() {
     print("got \(value)")
@@ -114,6 +114,57 @@ for value in myStack {
 var myOtherStack = Stack<Int>()
 myOtherStack.pushAll([1,2,3])
 myStack.pushAll(myOtherStack)
+
 for value in myStack {
     print("after pushAll for-in got \(value)")
 }
+
+print(myStack)
+
+// Generic composition and opaque types
+
+protocol Food {
+    var menuListing: String { get }
+}
+
+struct Bread : Food {
+    var kind = "sourdough"
+    var menuListing: String {
+        "\(kind) bread"
+    }
+}
+
+func eat<T: Food>(_ food: T) {
+    print("I sure love \(food.menuListing)")
+}
+
+eat(Bread())
+
+struct Restaurant {
+    private struct SlicedFood<Ingredient: Food>: Food {
+        var food: Ingredient
+        var menuListing: String {
+            "a slice of \(food.menuListing)"
+        }
+    }
+    
+    private struct CookedFood<Ingredient: Food>: Food {
+        var food: Ingredient
+        var menuListing: String {
+            "\(food.menuListing), cooked to perfection"
+        }
+    }
+    
+    func makeSlicedBread() -> some Food {
+        return SlicedFood(food: Bread())
+    }
+    
+    func makeToast() -> some Food {
+        let slicedBread = SlicedFood(food: Bread())
+        return CookedFood(food: slicedBread)
+    }
+}
+
+let restaurant = Restaurant()
+let toast = restaurant.makeToast()
+eat(toast)
