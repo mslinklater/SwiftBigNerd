@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B4427002B69557500B9486F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4426FF2B69557500B9486F /* main.swift */; };
 		3B4427072B69AA9700B9486F /* WordFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4427062B69AA9700B9486F /* WordFinder.swift */; };
+		3BD437812B6AEDE6000CA462 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 3BD437802B6AEDE6000CA462 /* ArgumentParser */; };
+		3BD437832B6AEDE6000CA462 /* generate-manual in Frameworks */ = {isa = PBXBuildFile; productRef = 3BD437822B6AEDE6000CA462 /* generate-manual */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +29,7 @@
 		3B4426FC2B69557500B9486F /* wordlasso */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = wordlasso; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4426FF2B69557500B9486F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		3B4427062B69AA9700B9486F /* WordFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFinder.swift; sourceTree = "<group>"; };
+		3BD437842B6AF272000CA462 /* wordlasso.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wordlasso.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +37,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD437812B6AEDE6000CA462 /* ArgumentParser in Frameworks */,
+				3BD437832B6AEDE6000CA462 /* generate-manual in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +64,7 @@
 		3B4426FE2B69557500B9486F /* wordlasso */ = {
 			isa = PBXGroup;
 			children = (
+				3BD437842B6AF272000CA462 /* wordlasso.entitlements */,
 				3B4427062B69AA9700B9486F /* WordFinder.swift */,
 				3B4426FF2B69557500B9486F /* main.swift */,
 			);
@@ -81,6 +87,10 @@
 			dependencies = (
 			);
 			name = wordlasso;
+			packageProductDependencies = (
+				3BD437802B6AEDE6000CA462 /* ArgumentParser */,
+				3BD437822B6AEDE6000CA462 /* generate-manual */,
+			);
 			productName = wordlasso;
 			productReference = 3B4426FC2B69557500B9486F /* wordlasso */;
 			productType = "com.apple.product-type.tool";
@@ -109,6 +119,9 @@
 				Base,
 			);
 			mainGroup = 3B4426F32B69557500B9486F;
+			packageReferences = (
+				3BD4377F2B6AEDE6000CA462 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
 			productRefGroup = 3B4426FD2B69557500B9486F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -252,6 +265,7 @@
 		3B4427042B69557500B9486F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = wordlasso/wordlasso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7B9QA8226F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -263,6 +277,7 @@
 		3B4427052B69557500B9486F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = wordlasso/wordlasso.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7B9QA8226F;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -293,6 +308,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3BD4377F2B6AEDE6000CA462 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3BD437802B6AEDE6000CA462 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BD4377F2B6AEDE6000CA462 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+		3BD437822B6AEDE6000CA462 /* generate-manual */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3BD4377F2B6AEDE6000CA462 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = "generate-manual";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3B4426F42B69557500B9486F /* Project object */;
 }

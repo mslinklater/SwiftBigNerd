@@ -6,14 +6,38 @@
 //
 
 import Foundation
+import ArgumentParser
 
-struct Wordlasso {
+struct Wordlasso : ParsableCommand {
+    @Argument(help: """
+        The word template to match, with \(WordFinder.wildcard) as \
+        placeholders. Leaving this blank will enter interactive mode.
+    """)
+    
+    var template: String?
+    
     func run() throws {
-        let wordList = ["Wolf", "wolf", "word", "works", "woo"]
-        let wordFinder = WordFinder(wordList: wordList)
+        let path = "/usr/share/dict/words"
+        let wordFinder = try WordFinder(wordListPath: path, ignoreCase: true)
         
-        let template = "wo.."
+        let args = CommandLine.arguments
         
+//        var template: String
+        
+        if let template = template {
+            findAndPrintMatches(for: template, using: wordFinder)
+        } else {
+            while true {
+                print("Enter word template: ", terminator: "")
+                template = readLine() ?? ""
+                if template.isEmpty { return }
+                findAndPrintMatches(for: template, using: wordFinder)
+            }
+        }
+        
+    }
+    
+    private func findAndPrintMatches(for template: String, using wordFinder: WordFinder) {
         let matches = wordFinder.findMatches(for: template)
         print("Found \(matches.count) \(matches.count == 1 ? "match" : "matches"):")
         for match in matches {
@@ -22,10 +46,12 @@ struct Wordlasso {
     }
 }
 
-var wordlasso = Wordlasso()
+//var wordlasso = Wordlasso()
 
-do {
-    try wordlasso.run()
-} catch {
-    fatalError("Program exited unexpectedly \(error)")
-}
+Wordlasso.main()
+
+//do {
+//    try wordlasso.run()
+//} catch {
+//    fatalError("Program exited unexpectedly \(error)")
+//}

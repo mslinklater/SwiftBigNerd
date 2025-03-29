@@ -10,9 +10,13 @@ import Foundation
 class WordFinder {
     static let wildcard: Character = "."
     let wordList: [String]
+    let ignoreCase: Bool
     
-    init(wordList: [String]) {
-        self.wordList = wordList
+    init(wordListPath: String, ignoreCase: Bool) throws {
+        let wordListContent = try String(contentsOfFile: wordListPath)
+        wordList = wordListContent.components(separatedBy: .newlines)
+        self.ignoreCase = ignoreCase
+        
     }
     
     private func isMatch(template: String, with word: String)-> Bool {
@@ -24,6 +28,10 @@ class WordFinder {
     
     func findMatches(for template: String) -> [String] {
         return wordList.filter { candidate in
-        isMatch(template: template, with: candidate )}
+        isMatch(template: caseCorrected(template), with: caseCorrected(candidate) )}
+    }
+    
+    private func caseCorrected(_ value: String) -> String {
+        ignoreCase ? value.lowercased() : value
     }
 }
